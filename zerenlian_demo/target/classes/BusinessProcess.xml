@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 把两个处理器添加到 ProcessTemplate 的模板上   -->
+    <bean id="sendMessageTemplate" class="com.moon.rezen.ProcessTemplate">
+        <property name="processList">
+            <list>
+                <ref bean="whiteListProcess"></ref>
+                <ref bean="sendMessageProcess"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 把ProcessTemplate 添加到 ProcessController 的 Map上 -->
+    <bean id="processController" class="com.moon.controller.ProcessController">
+        <property name="templateConfig">
+            <map>
+                <entry key="sendMessage" value-ref="sendMessageTemplate"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>
