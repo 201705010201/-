@@ -16,6 +16,9 @@
         <module>thread-boot-demo</module>
         <module>test-demo</module>
         <module>redis-test</module>
+        <module>bean-test</module>
+        <module>list_demo</module>
+        <module>cacheable_demo</module>
     </modules>
 
     <parent>
