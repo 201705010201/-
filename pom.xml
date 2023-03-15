@@ -19,6 +19,7 @@
         <module>bean-test</module>
         <module>list_demo</module>
         <module>cacheable_demo</module>
+        <module>spring_transactional</module>
     </modules>
 
     <parent>
