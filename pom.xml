@@ -20,6 +20,7 @@
         <module>list_demo</module>
         <module>cacheable_demo</module>
         <module>spring_transactional</module>
+        <module>pdf_test</module>
     </modules>
 
     <parent>

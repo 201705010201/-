@@ -1,14 +1,19 @@
 package com.moon;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.moon.User1;
 import com.moon.User1ServiceImpl;
 import com.moon.User2;
 import com.moon.User2ServiceImpl;
+import com.moon.mapper.User1Mapper;
+import com.moon.mapper.User2Mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @SpringBootTest
 public class SpringTest {
@@ -19,6 +24,38 @@ public class SpringTest {
     @Autowired
     private User2ServiceImpl user2Service;
 
+    @Test
+    @Transactional
+    public void transaction_nested_nested_exception_try(){
+        User1 user1=new User1();
+        user1.setName("张三");
+        user1Service.addNested(user1);
+
+        User2 user2=new User2();
+        user2.setName("李四");
+        try {
+            user2Service.addNestedException(user2);
+        } catch (Exception e) {
+            System.out.println("方法回滚");
+        }
+
+//        getUser();
+
+    }
+
+    @Test
+    public void getUser() {
+        LambdaQueryWrapper<User1> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User1::getName, "张三");
+        User1 user11 = user1Mapper.selectOne(wrapper);
+
+
+        LambdaQueryWrapper<User2> wrapper2 = new LambdaQueryWrapper<>();
+        wrapper2.eq(User2::getName, "李四");
+        User2 user22 = user2Mapper.selectOne(wrapper2);
+        System.out.println("user1:" + user11.toString());
+        System.out.println("user2:" + user22.toString());
+    }
 
 
     @Test
@@ -254,6 +291,19 @@ public class SpringTest {
         }
     }
 
+    @Autowired
+    private User1Mapper user1Mapper;
+
+    @Autowired
+    private User2Mapper user2Mapper;
+
+    @Test
+    public void testttt() {
+        LambdaQueryWrapper<User1> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(User1::getName, "moon", "cmy");
+        List<User1> user1s = user1Mapper.selectList(queryWrapper);
+
+    }
 
 
 }
